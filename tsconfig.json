@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Set the target JavaScript version (adjust if needed)
+    "module": "commonjs", // Module system (commonjs for Node.js)
+    "strict": true, // Enable strict mode for type checking
+    "outDir": "dist", // Output directory for compiled JavaScript (optional)
+    "esModuleInterop": true, // Allow for easier mixing of commonjs and ES modules
+    "allowJs": true // Allow compiling plain JavaScript files (optional)
+  },
+  "include": ["src"] // Include source files from the "src" directory
+}
