@@ -7,5 +7,5 @@
     "esModuleInterop": true, // Allow for easier mixing of commonjs and ES modules
     "allowJs": true // Allow compiling plain JavaScript files (optional)
   },
-  "include": ["src"] // Include source files from the "src" directory
+  "include": ["src", "app.ts"] // Include source files from the "src" directory
 }
