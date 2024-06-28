@@ -1,11 +1,14 @@
 const express = require("express");
+const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello world!");
+  res.send("Hello World!");
 });
+
+app.use("/users", userRouter);
 
 module.exports = app;
