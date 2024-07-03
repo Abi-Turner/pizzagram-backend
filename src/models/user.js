@@ -1,15 +1,19 @@
 module.exports = (connection, DataTypes) => {
-  const schema = {
-    google_id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+  const UserModel = connection.define(
+    "users",
+    {
+      google_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      profile_picture: DataTypes.STRING,
+      bio: DataTypes.TEXT,
     },
-    profile_picture: DataTypes.STRING,
-    bio: DataTypes.TEXT,
-  };
-
-  const UserModel = connection.define("User", schema);
+    {
+      timestamps: true,
+    }
+  );
 
   return UserModel;
 };
