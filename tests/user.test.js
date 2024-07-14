@@ -90,7 +90,7 @@ describe("/users", () => {
         const response = await request(app).get("/users/12345");
 
         expect(response.status).to.equal(404);
-        expect(response.body.error).to.equal("User could not be found.");
+        expect(response.body.error).to.equal("user could not be found.");
       });
     });
 
@@ -113,7 +113,7 @@ describe("/users", () => {
         });
 
         expect(response.status).to.equal(404);
-        expect(response.body.error).to.equal("User could not be found.");
+        expect(response.body.error).to.equal("user could not be found.");
       });
     });
 
@@ -130,7 +130,7 @@ describe("/users", () => {
       it("returns 404 if the user does not exist", async () => {
         const response = await request(app).delete("/users/12345");
         expect(response.status).to.equal(404);
-        expect(response.body.error).to.equal("User could not be found.");
+        expect(response.body.error).to.equal("user could not be found.");
       });
     });
   });

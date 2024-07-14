@@ -1,9 +1,29 @@
 module.exports = (connection, DataTypes) => {
-  const schema = {
-    image_url: DataTypes.STRING,
-    caption: DataTypes.TEXT,
-  };
+  const PostModel = connection.define(
+    "posts",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      image_url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      caption: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
 
-  const PostModel = connection.define("Post", schema);
   return PostModel;
 };
