@@ -19,7 +19,13 @@ const loadEnv = () => {
 };
 
 const dropDatabase = async (databaseName) => {
-  const client = new Client();
+  const client = new Client({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: "postgres",
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+  });
   try {
     await client.connect();
 

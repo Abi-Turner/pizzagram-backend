@@ -11,6 +11,8 @@ describe("/posts", () => {
     await Post.sequelize.sync({ force: true });
 
     user = await User.create({
+      email: "test@example.com",
+      password: "password",
       google_id: "some_id_5678",
       profile_picture: "https://example.com/profile.jpg",
       bio: "some bio text",

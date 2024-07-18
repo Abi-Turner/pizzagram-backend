@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = (connection, DataTypes) => {
   const UserModel = connection.define(
     "users",
@@ -8,10 +10,14 @@ module.exports = (connection, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      google_id: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       profile_picture: DataTypes.STRING,
       bio: DataTypes.TEXT,
@@ -20,6 +26,17 @@ module.exports = (connection, DataTypes) => {
       timestamps: true,
     }
   );
+
+  UserModel.findByLogin = async function (email, password) {
+    const user = await this.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    return validPassword ? user : null;
+  };
 
   return UserModel;
 };

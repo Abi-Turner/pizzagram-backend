@@ -13,7 +13,8 @@ describe("/comments", () => {
     await Comment.sequelize.sync({ force: true });
 
     user = await User.create({
-      google_id: "some_id_5678",
+      email: "test@example.com",
+      password: "password",
       profile_picture: "https://example.com/profile.jpg",
       bio: "some bio text",
     });

@@ -12,12 +12,14 @@ describe("/follows", () => {
 
     users = await Promise.all([
       User.create({
-        google_id: "some_id_1234",
+        email: "test@example.com",
+        password: "password",
         profile_picture: "https://example.com/profile1.jpg",
         bio: "first bio text",
       }),
       User.create({
-        google_id: "some_id_5678",
+        email: "test1@example.com",
+        password: "password",
         profile_picture: "https://example.com/profile2.jpg",
         bio: "second bio text",
       }),

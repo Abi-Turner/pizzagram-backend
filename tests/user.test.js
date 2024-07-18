@@ -11,19 +11,17 @@ describe("/users", () => {
   });
 
   describe("with no records in database", () => {
-    describe("POST /users", () => {
-      it("creates a new user in the database", async () => {
+    describe("POST /users with email", () => {
+      it("creates a new user in the database with email", async () => {
         const response = await request(app).post("/users").send({
-          google_id: "some_id_1234",
+          email: "test@example.com",
+          password: "password",
           profile_picture: "https://example.com/profile.jpg",
           bio: "some bio text",
         });
 
         expect(response.status).to.equal(201);
-        expect(response.body.google_id).to.equal("some_id_1234");
-        expect(response.body.profile_picture).to.equal(
-          "https://example.com/profile.jpg"
-        );
+        expect(response.body.email).to.equal("test@example.com");
         expect(response.body.bio).to.equal("some bio text");
 
         const newUserRecord = await User.findByPk(response.body.id, {
@@ -31,6 +29,7 @@ describe("/users", () => {
         });
 
         expect(newUserRecord).to.exist;
+        expect(newUserRecord.email).to.equal("test@example.com");
       });
     });
   });
@@ -41,17 +40,20 @@ describe("/users", () => {
     beforeEach(async () => {
       users = await Promise.all([
         User.create({
-          google_id: "some_id_1234",
+          email: "test2@example.com",
+          password: "password",
           profile_picture: "https://example.com/profile.jpg",
           bio: "some bio text",
         }),
         User.create({
-          google_id: "some_id_5678",
+          email: "test3@example.com",
+          password: "password",
           profile_picture: "https://example.com/profile.jpg",
           bio: "some more bio text",
         }),
         User.create({
-          google_id: "some_id_9101112",
+          email: "test4@example.com",
+          password: "password",
           profile_picture: "https://example.com/profile.jpg",
           bio: "even more bio text",
         }),
@@ -68,7 +70,7 @@ describe("/users", () => {
         response.body.forEach((user) => {
           const expected = users.find((a) => a.id === user.id);
 
-          expect(user.google_id).to.equal(expected.google_id);
+          expect(user.email).to.equal(expected.email);
           expect(user.profile_picture).to.equal(expected.profile_picture);
           expect(user.bio).to.equal(expected.bio);
         });
@@ -81,7 +83,7 @@ describe("/users", () => {
         const response = await request(app).get(`/users/${user.id}`);
 
         expect(response.status).to.equal(200);
-        expect(response.body.google_id).to.equal(user.google_id);
+        expect(response.body.email).to.equal(user.email);
         expect(response.body.profile_picture).to.equal(user.profile_picture);
         expect(response.body.bio).to.equal(user.bio);
       });

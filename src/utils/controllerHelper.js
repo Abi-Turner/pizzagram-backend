@@ -1,5 +1,6 @@
 const { User, Post, Like, Follow, Comment } = require("../models");
 const get404Error = (model) => ({ error: `${model} could not be found.` });
+const bcrypt = require("bcrypt");
 
 const getModel = (model) => {
   const models = {
@@ -52,8 +53,27 @@ const getOptions = (model) => {
 const createItem = async (res, model, item) => {
   const Model = getModel(model);
   try {
-    const newItem = await Model.create(item);
-    res.status(201).json(newItem);
+    if (model === "user") {
+      const { email, password, profile_picture, bio } = item;
+      const existingUser = await User.findOne({ where: { email } });
+
+      if (existingUser) {
+        return res.status(400).json({ message: "User already exists." });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = await User.create({
+        email,
+        password: hashedPassword,
+        profile_picture,
+        bio,
+      });
+
+      res.status(201).json(newUser);
+    } else {
+      const newItem = await Model.create(item);
+      res.status(201).json(newItem);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
