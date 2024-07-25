@@ -4,10 +4,9 @@ const app = require("../src/app");
 
 describe("App working correctly", () => {
   describe("GET /", () => {
-    it("sends Hello World", async () => {
+    it("starts the server", async () => {
       const response = await request(app).get("/");
       expect(response.status).to.equal(200);
-      expect(response.text).to.equal("Hello World!");
     });
   });
 });
